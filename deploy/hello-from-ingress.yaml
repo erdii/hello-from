@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-from-ingress
+  labels:
+    app: hello-from
+    tier: frontend
+spec:
+  rules:
+  - host: hello-from.localkube.werise.de
+    http:
+      paths:
+      - backend:
+          serviceName: hello-from
+          servicePort: 3000

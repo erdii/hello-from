@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-from
+  labels:
+    app: hello-from
+    tier: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+  selector:
+    app: hello-from
+    tier: frontend
