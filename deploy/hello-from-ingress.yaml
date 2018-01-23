@@ -4,10 +4,10 @@ metadata:
   name: hello-from-ingress
   labels:
     app: hello-from
-    tier: frontend
+    tier: backend
 spec:
   rules:
-  - host: hello-from.localkube.werise.de
+  - host: hello-from.tcskube.local
     http:
       paths:
       - backend:

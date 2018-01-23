@@ -6,17 +6,17 @@ spec:
   selector:
     matchLabels:
       app: hello-from
-      tier: frontend
+      tier: backend
   replicas: 4
   template:
     metadata:
       labels:
         app: hello-from
-        tier: frontend
+        tier: backend
     spec:
       containers:
       - name: webapp
-        image: erdii/hello-from:1.0.2
+        image: erdii/hello-from:1.0.1
         resources:
           requests:
             cpu: 100m
