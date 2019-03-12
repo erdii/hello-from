@@ -3,7 +3,10 @@ NAME := $(shell jq -r '.name' package.json)
 REGISTRY := $(shell jq -r '.registry' deploy.json)
 REPO := $(shell jq -r '.repo' deploy.json)
 BUILD_PATH := .build
-	
+
+.PHONY: all
+all: | docker push-docker
+
 .PHONY: docker
 docker:
 	sudo docker build . \
