@@ -4,15 +4,21 @@ const morgan = require("morgan");
 
 const app = express();
 
+app.set("trust proxy", true);
+app.set("x-powerered-by", false);
+
 app.use(morgan("combined"));
 
 app.get("/", (req, res) => {
-  res.send({
-    message: `Hello from ${os.hostname()}`,
-    hostname: os.hostname(),
-    ip: req.ip,
+  const data = {
     ts: Date.now(),
-  });
+    ip: req.ip,
+    hostname: os.hostname(),
+    headers: req.headers,
+  };
+
+  console.log(data);
+  res.send(data);
 });
 
 app.listen(3000, () => {
