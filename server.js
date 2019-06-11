@@ -6,9 +6,11 @@ const app = express();
 app.set("trust proxy", true);
 app.set("x-powerered-by", false);
 
-app.get("/", (req, res) => {
+app.use((req, res) => {
   const data = JSON.stringify({
     ts: Date.now(),
+    method: req.method,
+    path: req.path,
     ip: req.ip,
     hostname: os.hostname(),
     headers: req.headers,
