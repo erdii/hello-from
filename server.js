@@ -1,10 +1,15 @@
 const os = require("os");
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 app.set("trust proxy", true);
 app.set("x-powerered-by", false);
+
+app.use(bodyParser.text({
+  type: "*/*"
+}));
 
 app.use((req, res) => {
   const data = JSON.stringify({
@@ -14,6 +19,7 @@ app.use((req, res) => {
     ip: req.ip,
     hostname: os.hostname(),
     headers: req.headers,
+    body: req.body,
   });
 
   console.log(data);
@@ -21,5 +27,5 @@ app.use((req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("app listening");
+  console.log("app listening on port 3000");
 });
