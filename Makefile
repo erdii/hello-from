@@ -9,13 +9,13 @@ all: | docker push-docker
 
 .PHONY: docker
 docker:
-	sudo docker build . \
-  		-t $(NAME):latest \
+	docker build . \
+		-t $(NAME):latest \
 		-t $(NAME):$(VERSION) \
 		-t $(REGISTRY)/$(REPO):latest \
 		-t $(REGISTRY)/$(REPO):$(VERSION)
 
 .PHONY: push-docker
 push-docker:
-	sudo docker push $(REGISTRY)/$(REPO):$(VERSION)
-	sudo docker push $(REGISTRY)/$(REPO):latest
+	docker push $(REGISTRY)/$(REPO):$(VERSION)
+	docker push $(REGISTRY)/$(REPO):latest

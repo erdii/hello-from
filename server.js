@@ -7,9 +7,8 @@ const app = express();
 app.set("trust proxy", true);
 app.set("x-powerered-by", false);
 
-app.use(bodyParser.text({
-  type: "*/*"
-}));
+app.use(bodyParser.json());
+app.use(bodyParser.text());
 
 app.use((req, res) => {
   const data = JSON.stringify({
