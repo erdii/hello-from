@@ -1,6 +1,15 @@
 const os = require("os");
 const express = require("express");
 const bodyParser = require("body-parser");
+const https = require("https");
+const fs = require("fs");
+
+const config = {
+  port: parseInt(process.env.PORT || "3000"),
+  tlsEnabled: !!process.env.TLS_ENABLED,
+  tlsCertFile: process.env.TLS_CERT_FILE,
+  tlsKeyFile: process.env.TLS_KEY_FILE,
+};
 
 const app = express();
 
@@ -25,6 +34,18 @@ app.use((req, res) => {
   res.type("json").send(data);
 });
 
-app.listen(3000, () => {
-  console.log("app listening on port 3000");
-});
+console.log(config);
+
+if (config.tlsEnabled) {
+  https.createServer({
+    key: fs.readFileSync(config.tlsKeyFile),
+    cert: fs.readFileSync(config.tlsCertFile),
+  }, app).listen(config.port, () => {
+    console.log(`https server listening on port ${config.port}`);
+  });
+} else {
+  app.listen(config.port, () => {
+    console.log(`http server listening on port ${config.port}`);
+  });
+}
+
