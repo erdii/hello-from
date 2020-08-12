@@ -1,20 +1,14 @@
-# version 8 was used
-FROM erdii/nodejs-alpine-buildtools:latest
-
-# bootstrap app folder
-# add app code
-ADD . /app
-WORKDIR /app
-
-# set production envvar
+FROM node:14.7-slim as builder
 ENV NODE_ENV production
+WORKDIR /app
+ADD . /app
+RUN npm install --ci
 
-# install npm dependencies
-RUN npm install --production
-
-# remove build dependencies
-RUN apk del make gcc g++ python
+FROM node:14.7-slim
+ENV NODE_ENV production
+WORKDIR /app
+COPY --from=builder /app /app
 
 EXPOSE 3000
 
-CMD ["node", "/app/server.js", "--max-old-space-size=128"]
+CMD ["node", "/app/server.js", "--max-old-space-size=64"]
